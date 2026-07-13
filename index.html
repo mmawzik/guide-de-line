@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Путеводитель по Гуанчжоу, Фошань и Чжуншань</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F3EE;
+    --card:#FBFAF6;
+    --ink:#1C1B18;
+    --ink-soft:#55524A;
+    --ink-faint:#8C887E;
+    --jade:#3F6B54;
+    --jade-soft:#E4EBE5;
+    --seal:#B23A2E;
+    --seal-soft:#F2E0DD;
+    --line:#DEDCD3;
+    --line-strong:#CBC8BC;
+    --radius:14px;
+    --disp:"Space Grotesk",system-ui,sans-serif;
+    --body:"Inter",system-ui,sans-serif;
+    --cjk:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.5;
+    padding:0 0 88px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 18px}
+
+  /* ---- Header ---- */
+  header{padding:34px 0 20px}
+  .eyebrow{
+    font-family:var(--disp);
+    font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--jade);margin-bottom:14px;
+    display:flex;align-items:center;gap:9px;
+  }
+  .eyebrow::before{content:"";width:24px;height:1.5px;background:var(--jade);display:inline-block}
+  h1{
+    font-family:var(--disp);
+    font-weight:600;font-size:31px;line-height:1.08;letter-spacing:-.015em;
+    margin-bottom:10px;
+  }
+  h1 .cn{font-family:var(--cjk);font-weight:500;color:var(--ink-soft)}
+  .lede{color:var(--ink-soft);font-size:14.5px;max-width:56ch}
+  .howto{
+    margin-top:18px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:13px 15px;font-size:13px;color:var(--ink-soft);
+    display:flex;gap:11px;align-items:flex-start;
+  }
+  .howto .pin{flex:0 0 auto;color:var(--seal);font-size:15px;line-height:1.4;margin-top:1px}
+  .howto b{color:var(--ink);font-weight:600}
+
+  /* ---- Route nav ---- */
+  .route{
+    position:sticky;top:0;z-index:20;background:var(--paper);
+    padding:12px 0 11px;margin-top:8px;
+    border-bottom:1px solid var(--line);
+  }
+  .route-inner{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+  .node{
+    font-family:var(--disp);font-weight:500;font-size:13.5px;
+    color:var(--ink-soft);text-decoration:none;
+    padding:6px 11px;border-radius:20px;border:1px solid transparent;
+    display:inline-flex;align-items:baseline;gap:6px;transition:.15s;
+  }
+  .node .cn{font-family:var(--cjk)}
+  .node:hover{color:var(--ink)}
+  .node.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .arrow{color:var(--line-strong);font-size:12px;padding:0 1px;user-select:none}
+
+  /* ---- Filters ---- */
+  .filters{display:flex;gap:7px;flex-wrap:wrap;padding:18px 0 6px}
+  .chip{
+    font-family:var(--body);font-size:12.5px;font-weight:500;
+    color:var(--ink-soft);background:var(--card);
+    border:1px solid var(--line-strong);border-radius:20px;
+    padding:6px 13px;cursor:pointer;transition:.15s;white-space:nowrap;
+  }
+  .chip:hover{border-color:var(--ink-faint);color:var(--ink)}
+  .chip.on{background:var(--jade);border-color:var(--jade);color:#fff}
+
+  /* ---- City section ---- */
+  .city{padding-top:26px;scroll-margin-top:60px}
+  .city-head{display:flex;align-items:baseline;gap:12px;margin-bottom:4px}
+  .city-idx{font-family:var(--disp);font-size:12px;font-weight:600;color:var(--seal);letter-spacing:.05em}
+  .city-name{font-family:var(--disp);font-size:23px;font-weight:600;letter-spacing:-.01em}
+  .city-cn{font-family:var(--cjk);font-size:17px;font-weight:500;color:var(--ink-soft)}
+  .city-tag{margin-left:auto;font-size:11.5px;color:var(--ink-faint);text-align:right;line-height:1.35;max-width:44%}
+
+  /* ---- Rows ---- */
+  .group-label{
+    font-family:var(--disp);font-size:11px;font-weight:600;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--jade);
+    margin:22px 0 9px;display:flex;align-items:center;gap:9px;
+  }
+  .group-label::after{content:"";flex:1;height:1px;background:var(--line)}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);overflow:hidden;
+  }
+  .row{
+    display:flex;align-items:stretch;gap:0;
+    border-top:1px solid var(--line);
+  }
+  .row:first-child{border-top:none}
+  .row-main{flex:1;min-width:0;padding:13px 14px}
+  .name-line{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .en{font-weight:600;font-size:15px;color:var(--ink);letter-spacing:-.005em}
+  .cn-copy{
+    font-family:var(--cjk);font-size:14px;color:var(--jade);font-weight:500;
+    background:none;border:none;cursor:pointer;padding:2px 6px;border-radius:6px;
+    display:inline-flex;align-items:center;gap:5px;transition:.15s;line-height:1.3;
+  }
+  .cn-copy:hover{background:var(--jade-soft)}
+  .cn-copy .ic{opacity:.55;font-size:11px}
+  .cn-copy.done{color:var(--seal);background:var(--seal-soft)}
+  .meta{margin-top:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .area{
+    font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .note{font-size:12.8px;color:var(--ink-soft);margin-top:5px;line-height:1.45}
+  .amap{
+    flex:0 0 auto;width:66px;border-left:1px solid var(--line);
+    background:transparent;text-decoration:none;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    color:var(--seal);transition:.15s;
+  }
+  .amap:hover{background:var(--seal-soft)}
+  .amap svg{width:19px;height:19px}
+  .amap span{font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+
+  .empty{display:none;padding:16px 4px;color:var(--ink-faint);font-size:13px;font-style:italic}
+
+  footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:11.5px;color:var(--ink-faint);line-height:1.6}
+  footer b{color:var(--ink-soft);font-weight:600}
+
+  .toast{
+    position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:var(--paper);font-size:12.5px;font-weight:500;
+    padding:9px 16px;border-radius:22px;opacity:0;pointer-events:none;transition:.22s;
+    display:flex;align-items:center;gap:8px;z-index:50;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast .cnv{font-family:var(--cjk)}
+
+  @media (max-width:440px){
+    h1{font-size:26px}
+    .city-tag{display:none}
+    .amap{width:58px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+  /* ---- City tabs (top) ---- */
+  .citytabs{
+    position:sticky;top:0;z-index:30;background:var(--paper);
+    display:flex;gap:8px;padding:12px 0 11px;margin-top:6px;
+    border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch;
+  }
+  .citytabs::-webkit-scrollbar{display:none}
+  .ctab{
+    flex:0 0 auto;font-family:var(--disp);font-weight:500;font-size:14px;
+    color:var(--ink-soft);background:var(--card);
+    border:1px solid var(--line-strong);border-radius:22px;
+    padding:8px 16px;cursor:pointer;transition:.15s;white-space:nowrap;
+    display:inline-flex;align-items:baseline;gap:7px;
+  }
+  .ctab .cn{font-family:var(--cjk);font-size:13px}
+  .ctab:hover{color:var(--ink);border-color:var(--ink-faint)}
+  .ctab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .ctab.active .cn{color:var(--paper);opacity:.85}
+
+  /* ---- Bottom category bar (fixed) ---- */
+  .catbar{
+    position:fixed;left:0;right:0;bottom:0;z-index:40;
+    background:rgba(244,243,238,.92);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    display:flex;gap:7px;justify-content:center;flex-wrap:nowrap;
+    padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));
+    overflow-x:auto;-webkit-overflow-scrolling:touch;
+  }
+  .catbar::-webkit-scrollbar{display:none}
+  .catchip{
+    flex:0 0 auto;font-family:var(--body);font-size:12.5px;font-weight:500;
+    color:var(--ink-soft);background:var(--card);
+    border:1px solid var(--line-strong);border-radius:20px;
+    padding:7px 14px;cursor:pointer;transition:.15s;white-space:nowrap;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .catchip:hover{border-color:var(--ink-faint);color:var(--ink)}
+  .catchip.on{background:var(--jade);border-color:var(--jade);color:#fff}
+  .catchip .ci{font-size:14px;line-height:1}
+  @media (max-width:440px){
+    .catchip{padding:7px 12px;font-size:12px}
+    .catchip .lbl-full{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">De Line Concept</div>
+    <h1>Путеводитель<br>по Гуанчжоу, Фошань и Чжуншань</h1>
+  </header>
+
+  <nav class="citytabs" id="citytabs"></nav>
+
+  <main id="content"></main>
+
+  <footer>
+    <b>Примечания.</b> Халяльные заведения могут меняться — уточняйте по телефону перед визитом с группой. Государственные больницы ТКМ загружены по будням в первой половине дня; приходите пораньше или регистрируйтесь заранее онлайн. Курорты с минеральными источниками находятся за пределами центра города (закладывайте время на дорогу). Ссылки Amap открывают поиск по китайскому названию заведения и указывают точное (или ближайшее) расположение.<br><br>
+    Подготовлено для приёма клиентов · De Line Concept.
+  </footer>
+</div>
+
+<nav class="catbar" id="catbar"></nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CITIES = [
+  {
+    id:"guangzhou", en:"Гуанчжоу", cn:"广州", idx:"01",
+    items:[
+      {cat:"halal", en:"Sultan Turkish Restaurant", cn:"苏坦土耳其餐厅", link:"https://surl.amap.com/cyAxtToc6Sm", area:"Юэсю · Турецкая кухня · ¥154/чел · 10:00–24:00",
+        note:"Турецкий ресторан: мясо на гриле, кебабы и закуски-мезе. Готовят вкусно, порции большие, обслуживают быстро. Одно из лучших мест такого типа в районе."},
+      {cat:"halal", en:"OTANTIK (Tianhe Tiyu West)", cn:"欧坦餐厅(GZ Tianhe广州天河体育西店)", link:"https://surl.amap.com/2QUGDzg32Ia", area:"Тяньхэ · Ближневосточная кухня · ¥118/чел · 11:00–23:30",
+        note:"Ближневосточная кухня в приятном зале. Большие порции, вкусно и не слишком дорого — удобно спокойно поужинать с клиентом. Есть своя парковка."},
+      {cat:"halal", en:"OTANTIK (Liwan Branch)", cn:"欧坦餐厅(GZ Liwan广州荔湾店)", link:"https://surl.amap.com/btXg2HMnf9y", area:"Ливань · Поздний ужин · ¥154/чел · 11:30–23:30",
+        note:"Тот же OTANTIK, но зал очень красивый: тёплый свет, розы на стенах, оливковые деревья — все фотографируются. Работают до поздней ночи, приятно посидеть вечером."},
+      {cat:"halal", en:"Hui Min Restaurant (Zhongshan 6th Rd)", cn:"回民饭店(中山六路)", link:"https://surl.amap.com/xKLaqK1m9Mt", area:"Юэсю · Халяльная кантонская кухня · ¥64/чел · 07:00–21:00",
+        note:"Старый халяльный кантонский ресторан, работает больше 20 лет. Берут утренний дянь-синь (маленькие блюда к чаю) и знаменитую утку. Открываются рано утром."},
+      {cat:"halal", en:"Xinyue Xinjiang Cuisine (Kaisa Plaza)", cn:"新粤新疆菜(佳兆业广场店)", link:"https://surl.amap.com/gDRZ9L8G22l", area:"Тяньхэ · Синьцзянская кухня · ¥85/чел · 11:00–21:30",
+        note:"Синьцзянская кухня, которую хвалят местные. Главное — баранина, которую едят руками, и «большая тарелка курицы» с широкой лапшой в соусе. Сытно и вкусно."},
+      {cat:"halal", en:"Bosphorus (Zhaoqing Mansion Branch)", cn:"铂斯西餐厅(肇庆大厦店)", link:"https://surl.amap.com/gTRqdXU1zdvT", area:"Сяобэй · Турецкая кухня · ¥143/чел · 10:00–01:00",
+        note:"Турецкий ресторан у метро Сяобэй. Фишка — большой стейк на кости с перечным соусом: корочка хрустит, мясо мягкое. Порции большие, цена нормальная."},
+      {cat:"halal", en:"Bosphorus Garden Turkish Cafe & Restaurant", cn:"铂斯土耳其西餐厅", link:"https://surl.amap.com/gTKFtquMgwj", area:"Таоцзинь · Турецкая/западная кухня · ¥111/чел · 12:00–03:00",
+        note:"Турецкое кафе-ресторан. Вкусные лепёшки, средиземноморские сэндвичи и яичница с помидорами и сыром. Работают до трёх ночи, есть парковка."},
+      {cat:"halal", en:"Bosphorus Turkish Restaurant (Zhujiang Branch)", cn:"铂斯土耳其西餐厅", link:"https://surl.amap.com/ibOB4fk1jbTY", area:"Тяньхэ · Турецкая/западная кухня · ¥145/чел · 11:30–23:30",
+        note:"Турецкий ресторан у Жемчужной реки. Советуют бараньи рёбра на гриле — сочные, с корочкой. Хорошо зайти после вечерней прогулки по набережной."},
+      {cat:"halal", en:"Antalya Garden Restaurant (Liede)", cn:"安塔利亚花园餐厅(猎德店)", link:"https://surl.amap.com/aRM4ZP4HgwW", area:"Тяньхэ · Турецкая кухня · ¥131/чел · 10:00–01:30",
+        note:"Турецкий ресторан с космической темой: официанты в костюмах инопланетян танцуют, бывает фейерверк. Весело и необычно, отлично для пары. Работают почти до двух ночи."},
+      {cat:"halal", en:"Antalya Turkish Restaurant (Xiaobei)", cn:"安塔利亚土耳其餐厅(小北店)", link:"https://surl.amap.com/eMcIJIGg1LG", area:"Сяобэй · Турецкая кухня · ¥137/чел · 12:00–03:00",
+        note:"Настоящая турецкая кухня в мусульманском квартале. Хвалят наваристый суп и мясо — снаружи хрустит, внутри мягкое. Часто заходят местные. Открыто до трёх ночи."},
+      {cat:"halal", en:"CZN Burak Turkish Restaurant", cn:"CZN Burak柏克土耳其西餐厅", link:"https://surl.amap.com/j0uqscK1q02a", area:"Юэсю · Турецкая кухня, шоу-формат · ¥154/чел · 12:00–24:00",
+        note:"Турецкий ресторан известного шеф-повара из соцсетей. Готовят прямо при гостях, с небольшим шоу. В меню мясо и кебабы."},
+      {cat:"halal", en:"Armada Restaurant", cn:"阿美达中东料理(环市东)", link:"https://surl.amap.com/j18WXrgydC6", area:"Юэсю · Ближневосточная кухня (в отеле) · ¥111/чел · 10:30–24:00",
+        note:"Ближневосточный ресторан над отелем. Советуют жареную курицу и воздушную лепёшку с ореховым соусом, ещё есть хумус и кебабы. Хорошо посидеть компанией."},
+      {cat:"halal", en:"Чайхона No. 1", cn:"Чайхона茶哈哪餐厅", link:"https://surl.amap.com/1TnPBRcKcU5", area:"Ливань · Среднеазиатская кухня · ¥86/чел · 08:00–00:30",
+        note:"Чайхана со знакомой едой: плов, запечёный сыр с яйцом (хачапури), баранья ножка, шашлык. Гостям из Казахстана и России будет как дома, есть даже русский фруктовый чай."},
+      {cat:"halal", en:"MADO Ice Cream & Café", cn:"MADO冰淇淋咖啡馆(淘金店)", link:"https://surl.amap.com/3fmUx9orfdU", area:"Таоцзинь · Турецкое кафе · ¥77/чел · 08:00–01:00",
+        note:"Турецкое кафе: знаменитое тягучее турецкое мороженое и слоёное мороженое, десерты и кофе. Хорошее место зайти на сладкое."},
+      {cat:"halal", en:"Nakhlah Cafe", cn:"Nakhlah cafe 沙特咖啡", link:"https://surl.amap.com/XirLdY1z88f", area:"Тяньхэ · Саудовский кофе · ¥58/чел · 14:00–02:00",
+        note:"Саудовская кофейня рядом с деловым центром. Удобно спокойно посидеть и поговорить за кофе."},
+      {cat:"halal", en:"Dicos (Nanfenghui Branch)", cn:"德克士(南丰汇店)", link:"https://surl.amap.com/dz3TOqS17eMg", area:"Паджоу · Халяльный фастфуд · ¥20/чел · 10:00–02:00",
+        note:"Халяльный фастфуд: курица и бургеры. Быстро перекусить в торговом центре."},
+      {cat:"halal", en:"Burger Plus+", cn:"BURGER PLUS+", link:"https://surl.amap.com/1zbAnO61aGU", area:"Ливань · Халяльные бургеры · ¥77/чел · 12:00–24:00",
+        note:"Халяльные бургеры. Простое место, чтобы быстро и сытно поесть."},
+      {cat:"halal", en:"Cedar Bakery", cn:"Cedar Bakery", link:"https://surl.amap.com/bTl3ew21fas9", area:"Ливань · Халяльная европейская пекарня · ¥28/чел · 09:00–24:00",
+        note:"Пекарня со свежей выпечкой и сладким. Хорошо взять кофе с булочкой."},
+      {cat:"spa", en:"Yuan Ecological Grand Hotel (Haizhu)", cn:"广东南美元生态大酒店(海珠店)", link:"https://surl.amap.com/i1SW3CqwaTT", area:"Хайчжу · Баня · Премиум",
+        note:"Баня и сауна премиум-класса."},
+      {cat:"spa", en:"Youma Space (Pazhou)", cn:"有马空间(琶洲店)", link:"https://surl.amap.com/bTOrVNEi9fA", area:"Паджоу, Хайчжу · Баня",
+        note:"Баня в торговом центре Nanfenghui рядом с выставочным центром Паджоу."},
+      {cat:"fun", en:"Chimelong International Circus", cn:"长隆国际大马戏", q:"长隆国际大马戏 番禺", area:"Панью · Цирк · вечернее шоу ~19:30",
+        note:"Всемирно известное цирковое шоу Chimelong — акробаты, воздушные гимнасты, животные, мотогонки в шаре на огромной арене. Детям очень нравится. Лучше брать билеты заранее."},
+      {cat:"fun", en:"Chimelong Safari Park", cn:"长隆野生动物世界", q:"长隆野生动物世界 番禺", area:"Панью · Сафари-парк · 09:30–18:00",
+        note:"Огромный сафари-парк: панды, коалы, тигры, жирафы, слоны. Есть поезд-сафари через зоны с животными. Один из лучших зоопарков Китая, целый день для детей."},
+      {cat:"fun", en:"Chimelong Paradise", cn:"长隆欢乐世界", q:"长隆欢乐世界 番禺", area:"Панью · Парк аттракционов · 10:00–20:00",
+        note:"Большой парк аттракционов с американскими горками и экстрим-аттракционами — для подростков и тех, кто постарше. Рядом с сафари-парком и цирком."},
+      {cat:"fun", en:"Chimelong Water Park", cn:"长隆水上乐园", q:"长隆水上乐园 番禺", area:"Панью · Аквапарк · тёплый сезон",
+        note:"Большой аквапарк с горками и волновым бассейном. Работает в тёплый сезон (примерно май–октябрь), вечером бывают пенные вечеринки."},
+      {cat:"shop", en:"Zhanxi Road Wholesale", cn:"站西路", q:"站西路 广州", area:"Юэсю · Опт · у ж/д вокзала",
+        note:"Оптовый район у Гуанчжоуского ж/д вокзала: кроссовки (站西鞋城), часы (站西钟表城), сумки и одежда. Для закупок для себя — цены оптовые, можно торговаться."},
+      {cat:"shop", en:"Baima Clothing Market", cn:"白马服装市场", q:"白马服装市场 广州", area:"Юэсю · Одежда опт · у ж/д вокзала",
+        note:"Крупный оптовый рынок одежды рядом с вокзалом — средний и выше сегмент, много модных марок. Отсюда закупаются магазины по всему Китаю и СНГ."},
+      {cat:"shop", en:"Shahe Clothing Wholesale", cn:"沙河服装批发市场", q:"沙河服装批发市场 广州", area:"Тяньхэ · Одежда опт · бюджет",
+        note:"Огромный и очень дешёвый оптовый рынок одежды. Народу много, цены низкие — если ищешь бюджетные закупки, это сюда. Приходи пораньше."},
+      {cat:"shop", en:"Qingping Herb Market", cn:"清平中草药市场", q:"清平中草药市场", area:"Ливань · Рынок трав · у метро Хуанша",
+        note:"Работает с 1979 года — один из первых государственных рынков лекарственных трав в Китае. Сушёные коренья, выдержанная цитрусовая цедра (陈皮), редкие грибы, сырьё для кантонских лечебных супов. Настоящий оптовый рынок, интересно посмотреть. Рядом с выходом E метро Хуанша."},
+      {cat:"shop", en:"Wanguo Outlets", cn:"万国奥特莱斯", q:"万国奥特莱斯 海珠", area:"Хайчжу · Аутлет · у метро Цзяньаньси",
+        note:"Крупнейший аутлет в центре Гуанчжоу, 8 этажей: Nike, Adidas, UR и десятки марок со скидками, детская одежда, обувь. На 6-м этаже — фудкорт. Удобно на метро (линия 2, Цзяньаньси)."},
+      {cat:"shop", en:"Teemall Outlets (Aoti)", cn:"天河城奥特莱斯 奥体店", q:"天河城奥特莱斯 奥体", area:"Тяньхэ · Аутлет",
+        note:"Аутлет сети Teemall в Тяньхэ — одежда, обувь, спорт, детское со скидками. Ближе к центру, чем загородные аутлеты."},
+      {cat:"shop", en:"Grandview Mall", cn:"正佳广场", q:"正佳广场 天河", area:"Тяньхэ · ТЦ · 10:00–22:00",
+        note:"Огромный ТЦ в самом сердце Тяньхэ: сотни магазинов, океанариум, кинотеатр, куча еды и развлечений. Легко провести полдня, удобно с детьми."},
+      {cat:"shop", en:"Teemall (Tianhecheng)", cn:"天河城", q:"天河城 广州", area:"Тяньхэ · ТЦ · 10:00–22:00",
+        note:"Классический большой ТЦ прямо у метро Тиюйсилу, в центре торгового района Тяньхэ. Массовые и средние бренды, много еды. Удобная отправная точка для шоппинга."},
+      {cat:"shop", en:"Taikoo Hui", cn:"广州太古汇", q:"广州太古汇 天河", area:"Тяньхэ · Премиум ТЦ · 10:00–22:00",
+        note:"Премиальный торговый центр: люксовые бренды, красивая современная архитектура, спокойная атмосфера. Для клиентов, которым нужен высокий сегмент."},
+      {cat:"shop", en:"Parc Central", cn:"天环广场", q:"天环广场 天河", area:"Тяньхэ · ТЦ · 10:00–22:00",
+        note:"Современный дизайнерский ТЦ рядом с Тайгухуэй (в виде двух драконов сверху). Модные и средне-премиальные марки, приятно гулять. Соединён с метро."},
+      {cat:"tcm", en:"Guangzhou United Family Hospital", cn:"广州和睦家医院", q:"广州和睦家医院 琶洲", area:"Хайчжу, Паджоу · Частная · скорая 24ч",
+        note:"Международная частная больница: круглосуточная скорая помощь, англоговорящие врачи, работа со страховками. Лучший выбор для иностранного гостя в экстренном случае. Сервисный центр 24ч."},
+      {cat:"tcm", en:"Clifford Hospital", cn:"广东祈福医院", q:"广东祈福医院 番禺", area:"Панью · Частная · JCI · скорая",
+        note:"Крупная частная больница, первая в Китае с международной аккредитацией JCI. Скорая помощь, VIP-отделение, признана десятками зарубежных страховых. Находится в Панью (далеко от центра)."},
+      {cat:"tcm", en:"Guangdong Provincial Hospital of TCM", cn:"广东省中医院 大德路总院", link:"https://surl.amap.com/1piZ9M1n5pP", area:"Юэсю · Флагман · Пн–Пт 08:00–12:00, 14:30–17:30 (сб–вс — утро)",
+        note:"Флагманская больница традиционной китайской медицины страны — иглоукалывание, туйна, травяная медицина. Очень загружена; приходите рано или регистрируйтесь заранее."},
+      {cat:"tcm", en:"1st Affiliated Hosp., GZ Univ. of CM", cn:"广州中医药大学第一附属医院", link:"https://surl.amap.com/9bKXmN41t4FE", area:"Байюнь · Университетская клиника · 08:00–12:00, 14:30–17:30",
+        note:"Крупная университетская клиника ТКМ — хорошая альтернатива, если провинциальная больница переполнена."},
+      {cat:"tcm", en:"Ruzhitang Clinic", cn:"如志堂", q:"如志堂 新河浦路", area:"Юэсю · Туйна / мануальная терапия",
+        note:"Специализированная туйна, работающая вдоль меридианов тела, а не с мышечной тканью, включая 中医松解术 (точную технику мануального освобождения) — иной вид телесной работы, чем обычный массаж."},
+      {cat:"tcm", en:"Sui'antang", cn:"随安堂", q:"随安堂 平月路南国一街", area:"Тяньхэ · Травяной массаж головы",
+        note:"Травяной массаж головы с последующим индивидуальным травяным настоем по вашей конституции (тепло/холод, влажность/сухость) — в ТКМ голова считается местом схождения меридианов, а не второстепенной зоной."},
+      {cat:"sights", en:"Canton Tower", cn:"广州塔", link:"https://surl.amap.com/6UWvLG21k9IS", area:"Хайчжу · Достопримечательность · 09:30–22:30 (вход до 22:00)",
+        note:"600-метровая телебашня, самая высокая в Китае — символ города. Смотровые площадки, виды на закат над Жемчужной рекой. Отличная точка для первого вечера."},
+      {cat:"sights", en:"Shamian Island", cn:"沙面岛", link:"https://surl.amap.com/1qpyVnxT660f", area:"Ливань · Колониальный квартал · круглосуточно · бесплатно",
+        note:"Зелёный остров бывшей концессии — европейская архитектура, столетние баньяны, набережная. Очень приятно гулять и фотографировать."},
+      {cat:"sights", en:"Chen Clan Ancestral Hall", cn:"陈家祠", link:"https://surl.amap.com/1ugonSFX1c0TM", area:"Ливань · Наследие · 09:00–18:00",
+        note:"Лучший образец лингнаньской архитектуры в городе — резьба по дереву, камню и керамике, фигурки на крыше, золочёные панно. Стоит рассмотреть детали вблизи."},
+      {cat:"sights", en:"Yongqingfang & Shangxiajiu", cn:"永庆坊", link:"https://surl.amap.com/2WMUv1XfneBM", area:"Ливань · Старый город · круглосуточно · бесплатно",
+        note:"Отреставрированные старинные переулки Сигуань — кафе, лавки, музеи. Здесь же родовой дом Брюса Ли. Рядом торговая улица Шансядзю."},
+      {cat:"sights", en:"Beijing Road Pedestrian Street", cn:"北京路步行街", link:"https://surl.amap.com/2a1vz3zDhfuB", area:"Юэсю · Шоппинг · круглосуточно · бесплатно",
+        note:"Центральная пешеходная улица. Под ногами — стеклянный настил, через который видно древнюю дорогу от династий Тан и Сун; вечером всё в подсветке. № 1 в рейтинге ночных рынков."},
+      {cat:"sights", en:"Yuexiu Park (Five Rams)", cn:"越秀公园", link:"https://surl.amap.com/WihdvQS10V", area:"Юэсю · Парк · круглосуточно · бесплатно",
+        note:"Самый большой центральный парк города. Здесь статуя Пяти Баранов — символ Гуанчжоу, и старинная башня Чжэньхайлоу с музеем."},
+    ]
+  },
+  {
+    id:"foshan", en:"Фошань", cn:"佛山", idx:"02",
+    items:[
+      {cat:"hotel", en:"Sofitel Foshan (Louvre)", cn:"佛山罗浮宫索菲特酒店", q:"佛山罗浮宫索菲特酒店 乐从", area:"Шунде, Лэцун · 5★ люкс · у мебельного центра",
+        note:"Лучший отель Фошаня, прямо у мебельного центра Лувр (罗浮宫). «Отель-шоурум»: вся мебель и предметы интерьера продаются. Идеален, если клиент приехал за мебелью — жильё и закупки в одном месте. Спа, бассейн, рестораны."},
+      {cat:"hotel", en:"InterContinental Foshan", cn:"佛山保利洲际酒店", q:"佛山顺德东平保利洲际酒店", area:"Шунде, Дунпин · 5★ · executive lounge",
+        note:"Высококлассный международный отель в Шунде. Executive lounge, хорошие рестораны (Шунде — город гастрономии), удобно для деловых гостей."},
+      {cat:"hotel", en:"Hilton Foshan Shunde", cn:"佛山海骏达希尔顿酒店", q:"佛山顺德海骏达希尔顿酒店", area:"Шунде · 5★ · отличные отзывы",
+        note:"Международный Hilton в Шунде с очень высокими оценками и хорошим соотношением цены и качества. Надёжный выбор для клиента."},
+      {cat:"hotel", en:"Pullman Foshan Shunde", cn:"佛山铂尔曼酒店", q:"佛山顺德雅高铂尔曼酒店", area:"Шунде · 5★ · бассейн, теннис",
+        note:"Отель Pullman (Accor) в Шунде: номера с балконами и видом на город, бассейн, фитнес, теннисный корт. Бесплатная парковка."},
+      {cat:"halal", en:"Sawa Middle Eastern & Fusion", cn:"Sawa中东融合菜餐厅", link:"https://surl.amap.com/cfYtfzA1m7fY", area:"Чанчэн · Фьюжн · ¥106/чел · 11:30–21:30",
+        note:"Ближневосточная кухня рядом с рынком плитки и сантехники. Фирменное — арабская курица на углях целиком: заворачивают в лепёшку с соусом. Удобно зайти пообедать после закупок, есть парковка."},
+      {cat:"halal", en:"Al Mandi Restaurant", cn:"清真西北人家餐厅(AL MANDI Restaurant)", link:"https://surl.amap.com/c9f3N2q1k2Pf", area:"Шунде, Лэцун · Халяльная северо-западная кухня · ¥64/чел · 10:30–22:30",
+        note:"Халяльная северо-западная кухня в мебельном центре. Баранина, которую едят руками, большая тарелка курицы, свежие овощи. Порции большие."},
+      {cat:"halal", en:"Adilijiang Xinjiang Cuisine", cn:"阿迪力江新疆美食", link:"https://surl.amap.com/c9yeujg1q7RT", area:"Шунде · Синьцзянская кухня · ¥59/чел · 12:00–24:00",
+        note:"Уйгурская кухня: шашлык, лапша и плов."},
+      {cat:"halal", en:"Shaharah Arabic Restaurant", cn:"ShaharahArabicRestaurant莎哈啦阿拉伯餐厅", link:"https://surl.amap.com/ceYri2C529c", area:"Шунде, Лэцун · Арабская кухня · ¥65/чел · 08:00–23:00",
+        note:"Арабский (йеменский) ресторан в Лэцуне, красивое здание. Мясное ассорти-гриль, йеменские лепёшки, креветки в чесноке (салуна)."},
+      {cat:"halal", en:"Turkish Restaurant (Dongyi Meiju)", cn:"土耳其餐厅(东怡美居店)", link:"https://surl.amap.com/1CF5itkA617", area:"Шунде, Лэцун · Турецкая кухня · ¥92/чел · 11:00–23:00",
+        note:"Турецкая кухня в Лэцуне. Плов с бараниной, мясные роллы, йеменский омлет-лепёшка, салат с помидорами."},
+      {cat:"shop", en:"Florentia Village (Guangzhou/Foshan)", cn:"佛罗伦萨小镇(广州/佛山)", q:"佛罗伦萨小镇 广州佛山", area:"Наньхай/граница с Гуанчжоу · Люкс-аутлет",
+        note:"Первый в Китае аутлет в итальянском стиле — 200+ люксовых брендов (Prada, Gucci, Burberry, Balenciaga, Fendi, Jimmy Choo и др.) со скидками от 2 折 (80%). Красивая архитектура, кафе и рестораны. Стоит закладывать полдня."},
+      {cat:"shop", en:"Shunlian Outlets", cn:"顺联奥特莱斯", q:"顺联奥特莱斯 桂城", area:"Наньхай, Гуйчэн · Спорт-аутлет",
+        note:"Аутлет спортивных брендов: Nike, Adidas, Columbia, New Balance, Skechers, Anta, Li-Ning и другие со скидками напрямую от фабрик. Хорош для бюджетных закупок спортивной одежды и обуви."},
+      {cat:"spa", en:"Shuiyuntian Leisure Hotel", cn:"水云天休闲酒店", q:"水云天休闲酒店 黄岐", area:"Наньхай, Хуанци · Баня · 40 000 м²",
+        note:"Один из крупнейших банных комплексов в районе Гуанчжоу-Фошань — сауны, водные процедуры, массаж, ТКМ-терапия, кинотеатр, детская зона. Полноценный отдых на полдня-день."},
+      {cat:"spa", en:"Legend International Water Club", cn:"传奇国际水汇", q:"传奇国际水汇 南海", area:"Наньхай · Баня + аквапарк",
+        note:"Баня премиум-класса с необычной фишкой — собственный мини-аквапарк с горками («欢乐остров»). Спа-программы, массаж, номера отдыха. Хорошо для семей с детьми."},
+      {cat:"spa", en:"Qianfeng Hot Spring Life", cn:"乾沣汤泉生活", q:"乾沣汤泉生活 佛山", area:"Баня · шведский стол включён",
+        note:"Популярный банный комплекс с бассейнами разной температуры, сауной и включённым шведским столом (морепродукты, утка по-пекински, мороженое). Есть кинотеатр и игровая зона."},
+      {cat:"tcm", en:"Foshan Hospital of TCM", cn:"佛山市中医院", q:"佛山市中医院", area:"Чанчэн · Ортопедия",
+        note:"Больница ТКМ национального уровня, всемирно известна костоправным искусством «Фошаньское вправление костей» (伤科正骨), нематериальным культурным наследием. Лучший выбор в регионе при переломах и спортивных травмах."},
+      {cat:"sights", en:"Foshan Ancestral Temple (Zumiao)", cn:"佛山祖庙", q:"佛山祖庙", area:"Чанчэн · Наследие",
+        note:"Храмовый комплекс эпохи Мин с залом Ип Мана (叶问堂) и музеем Вон Фэйхуна — наследие кунг-фу."},
+      {cat:"sights", en:"Lingnan Tiandi", cn:"佛山岭南天地", q:"佛山岭南天地", area:"Чанчэн · Рестораны",
+        note:"Отреставрированные переулки эпохи Цин, ставшие кафе, ресторанами и бутиками — удобно для приёма клиентов."},
+      {cat:"sights", en:"Nanfeng Ancient Kiln", cn:"南风古灶", q:"南风古灶", area:"Шивань · Керамика",
+        note:"Действующая «драконья печь» возрастом 500 лет, до сих пор обжигающая керамику — прямая связь для байеров плитки и керамики."},
+      {cat:"sights", en:"Qinghui Garden", cn:"清晖园", q:"清晖园", area:"Шунде · Классический сад",
+        note:"Один из четырёх великих классических садов Гуандуна; хорошо сочетается с гастрономическим днём в Шунде (город гастрономии ЮНЕСКО)."},
+    ]
+  },
+  {
+    id:"zhongshan", en:"Чжуншань", cn:"中山", idx:"03",
+    items:[
+      {cat:"halal", en:"Xinyue Xinjiang Cuisine (Zhongshan Old Store)", cn:"新粤新疆菜餐厅(中山老店)", link:"https://surl.amap.com/e2bwO4K148KT", area:"Шицзи · Халяльная синьцзянская кухня · ¥97/чел · 11:00–14:00, 17:00–21:30",
+        note:"Известная синьцзянская кухня, работает давно. Шашлык из баранины, большая тарелка курицы, жареные бараньи рёбра, плов, лапша-лянпи."},
+      {cat:"halal", en:"Tianshan Muyang Xinjiang Restaurant", cn:"天山牧羊新疆主题餐厅(悦盈新城城熙店)", link:"https://surl.amap.com/crydgC6y4HW", area:"Халяльная синьцзянская кухня · ¥88/чел · 10:00–22:00",
+        note:"Синьцзянский ресторан с тематическим залом. Фирменное — золотистые жареные бараньи рёбра, баранина с луком, плов, шашлык."},
+      {cat:"halal", en:"Xiyu Shifu", cn:"清真·西域食府", link:"https://surl.amap.com/csaC1h019fwr", area:"Халяль · ¥44/чел · 12:00–03:30",
+        note:"Северо-западная халяльная кухня — большая тарелка курицы, шашлык, острый картофель. Работают до половины четвёртого ночи."},
+      {cat:"halal", en:"KebabsnCurry (Guzhen)", cn:"KebabsnCurry印度料理(古镇店)", link:"https://surl.amap.com/cBW2Wyu1w6R6", area:"Гучжэнь · Индийская кухня · ¥58/чел · 11:00–23:00",
+        note:"Индийская кухня в Гучжэне: тандури-курица, курица карри, слоёные лепёшки, ягнёнок по-индийски. Удобно в день закупок света."},
+      {cat:"halal", en:"Antalya Turkish Western Restaurant", cn:"安塔利亚土耳其西餐厅", link:"https://surl.amap.com/cEWgNqy6g2s", area:"Гучжэнь · Турецкая/западная кухня · ¥88/чел · 09:00–23:00",
+        note:"Турецкий ресторан в Гучжэне (столица освещения). Стейк-томагавк, шашлык, турецкий кофе с гаданием на кофейной гуще. Красивый интерьер для фото, удобно в день закупок света."},
+      {cat:"halal", en:"Damoqing Shifu", cn:"大漠情食府", link:"https://surl.amap.com/cFDkE7MT0VR", area:"Гучжэнь · Особые блюда · ¥81/чел · 10:30–22:30",
+        note:"Северо-западная халяльная кухня в Гучжэне. Баранина руками, большая тарелка курицы, жареный барашек целиком, рыба-гриль."},
+      {cat:"halal", en:"Xinyue Xinjiang Cuisine (Guzhen Lihe)", cn:"新粤新疆菜(古镇利和店)", link:"https://surl.amap.com/bMx0HkK1Bdcg", area:"Гучжэнь · Халяльная синьцзянская кухня · ¥105/чел · 11:00–21:30",
+        note:"Синьцзянская кухня в ТЦ Лихэ, Гучжэнь. Лапша-лянпи, плов, шашлык из баранины, домашний йогурт."},
+      {cat:"halal", en:"Istanbul Turkish Restaurant", cn:"伊斯坦布尔istanbul土耳其餐厅", link:"https://surl.amap.com/cGNYWvU1B9tf", area:"Гучжэнь · Халяльная турецкая кухня · ¥108/чел · 10:00–24:00",
+        note:"Турецкий ресторан в Гучжэне с красивым залом. Пиде (турецкая пицца-лодочка), микс-гриль, пахлава и турецкий кофе."},
+      {cat:"halal", en:"Katalya Restaurant", cn:"卡塔利亚餐厅", link:"https://surl.amap.com/cIFYici1v2AA", area:"Гучжэнь · Халяль · ~¥60/чел · 09:00–23:00",
+        note:"Халяльный ресторан (Cattleya) в Гучжэне — мясные блюда и лепёшки."},
+      {cat:"spa", en:"Zhongshan Spring Resort", cn:"中山温泉宾馆", q:"中山温泉宾馆", area:"Саньсян · ~40 мин",
+        note:"Один из старейших курортов с минеральными источниками в Китае (с 1980 года) — классический купальный комплекс в саду; спокойное завершение дня в Чжуншане."},
+      {cat:"tcm", en:"Zhongshan Hospital of TCM", cn:"中山市中医院", q:"中山市中医院", area:"Шицзи · Больница 3-го класса А",
+        note:"Главная больница ТКМ города высшей категории — иглоукалывание, туйна, травяные консультации."},
+      {cat:"sights", en:"Sun Yat-sen's Former Residence", cn:"孙中山故居纪念馆", q:"孙中山故居纪念馆", area:"Цуйхэн · Национальный объект",
+        note:"Мемориальный дом-музей рождения доктора Сунь Ятсена — тёзки города, чьё имя узнает любой гость из СНГ."},
+      {cat:"sights", en:"Sun Wen West Road", cn:"孙文西路步行街", q:"孙文西路步行街", area:"Шицзи · Старая улица",
+        note:"Историческая аркадная (цилоу) торговая улица — приятная вечерняя прогулка по старому городу."},
+      {cat:"sights", en:"Zhongshan Zhan Garden", cn:"中山詹园", q:"中山詹园", area:"Наньцюй · Сад",
+        note:"Большой частный классический лингнаньский сад — спокойный, фотогеничный, хорош для неспешного утра."},
+      {cat:"sights", en:"Guzhen Lighting Expo Center", cn:"古镇灯博中心", q:"古镇灯博中心", area:"Гучжэнь · Закупки",
+        note:"Сердце светотехнической промышленности Китая — ключевая точка для закупок фасадного освещения."},
+    ]
+  },
+  {
+    id:"shenzhen", en:"Шэньчжэнь", cn:"深圳", idx:"04",
+    items:[
+      {cat:"halal", en:"Muslim Hotel Restaurant", cn:"穆斯林宾馆清真餐厅", q:"穆斯林宾馆清真餐厅 罗湖", area:"Лоху · Официальный халяль",
+        note:"Государственный ресторан, официально назначенный принимать мусульманских гостей города. Синьцзянская/северо-западная кухня, самый надёжный и проверенный выбор. Хвалят баранину руками."},
+      {cat:"halal", en:"Zhongfayuan Halal Restaurant", cn:"中发源清真美食", q:"中发源清真美食 罗湖", area:"Лоху · Крупнейшая халяль-сеть",
+        note:"Крупнейший и самый известный халяльный ресторан города, работает больше 20 лет. Принимали высоких гостей и чиновников. Шашлык, баранина, большая тарелка курицы, лапша."},
+      {cat:"halal", en:"Northwest Leader Sheep Restaurant", cn:"西北领头羊清真餐厅", q:"西北领头羊清真餐厅 梅林", area:"Мэйлинь · Синьцзянская кухня",
+        note:"Популярный синьцзянский ресторан рядом с мечетью, работает больше 10 лет — очередь по выходным. Фирменное: жареные бараньи рёбра в пустынном стиле, лапша дин-дин, домашний йогурт, лепёшка с мясом."},
+      {cat:"halal", en:"1001 Xinjiang Cuisine (Coastal City)", cn:"1001新疆菜(海岸城购物中心)", q:"1001新疆菜 海岸城", area:"Наньшань · Синьцзянская кухня, в ТЦ",
+        note:"Филиал известной сети синьцзянской кухни в торговом центре Coastal City — удобно совместить с шоппингом. Большая тарелка курицы, шашлык, плов."},
+      {cat:"shop", en:"Huaqiangbei Electronics Market", cn:"华强北", q:"华强北", area:"Футянь · Рынок электроники · «улица № 1» Китая",
+        note:"Легендарный электронный квартал — 20+ огромных рынков (Sege, Huaqiang Electronics World и др.): телефоны, аксессуары, компоненты, дроны. Торгуйтесь смело. Осторожно: часть «новых» телефонов на деле восстановленные (翻新机) — проверяйте товар и продавца перед покупкой."},
+      {cat:"shop", en:"SEG Electronics Market", cn:"赛格电子市场", q:"赛格电子市场 华强北", area:"Футянь · Компьютеры и компоненты",
+        note:"Часть Хуацянбэя, отдельное здание — ноутбуки, комплектующие, сборка ПК на заказ. Чем выше этаж, тем ниже цены. Продавцы охотно торгуются."},
+      {cat:"shop", en:"MixC Shenzhen", cn:"深圳万象城", q:"深圳万象城 罗湖", area:"Лоху · Премиум ТЦ",
+        note:"Один из первых и самых статусных торговых центров города — люксовые бренды, каток, кино, много ресторанов."},
+      {cat:"shop", en:"Coastal City", cn:"海岸城", q:"海岸城 南山", area:"Наньшань · ТЦ у моря",
+        note:"Большой торговый комплекс рядом с побережьем и OCT Bay — модные бренды, рестораны, вечером красиво подсвечен."},
+      {cat:"shop", en:"COCO Park", cn:"购物公园 COCO Park", q:"COCO Park 福田", area:"Футянь · ТЦ",
+        note:"Популярный торговый центр в деловом районе Футянь под открытым небом — магазины, кафе, вечером людно и приятно гулять."},
+      {cat:"shop", en:"Yitian Holiday Plaza", cn:"益田假日广场", q:"益田假日广场 福田", area:"Футянь · ТЦ",
+        note:"Ещё один крупный ТЦ в Футянь, недалеко от Coco Park — удобно сочетать оба в один шоппинг-день."},
+      {cat:"sights", en:"Dameisha Beach", cn:"大梅沙海滨公园", q:"大梅沙海滨公园", area:"Яньтянь · Пляж · бесплатно",
+        note:"Самый известный и длинный городской пляж (1800 м), бесплатный. Многолюдно, но удобно добраться — купание, зоны отдыха, кафе рядом."},
+      {cat:"sights", en:"Xichong Beach", cn:"西涌沙滩", q:"西涌沙滩 大鹏", area:"Дапэн · Пляж · ~1.5–2 ч от центра",
+        note:"Самый длинный и один из самых красивых пляжей города — считается одним из лучших побережий Китая. Далеко от центра, но стоит поездки: чистое море, горы вокруг. Вход платный."},
+      {cat:"sights", en:"Jiaochangwei", cn:"较场尾", q:"较场尾 大鹏", area:"Дапэн · Пляж + деревня с гестхаусами",
+        note:"Уютная прибрежная деревня с сотнями стильных гестхаусов у моря — приятно остаться на ночь. Пляж небольшой, мелкий, хорош для отдыха и заката."},
+    ]
+  },
+  {
+    id:"dongguan", en:"Дунгуань", cn:"东莞", idx:"05",
+    items:[
+      {cat:"halal", en:"Afanti Grandpa Restaurant", cn:"阿凡提老爷爷餐厅", q:"阿凡提老爷爷餐厅 东城", area:"Дунчэн · Халяльная уйгурская кухня · 11:30–21:00",
+        note:"Уйгурская халяльная кухня в ТЦ Ифэн в районе Дунчэн — шашлык, баранина, плов, лапша."},
+      {cat:"halal", en:"Dongguan Renjia", cn:"东莞人家", q:"东莞人家 东城", area:"Дунчэн · Местная кухня Дунгуаня",
+        note:"Старое, хорошо известное заведение с местной дунгуаньской кухней — работает допоздна, есть бесплатная парковка. Хорошо для знакомства с местной едой (не халяль)."},
+    ]
+  }
+];
+
+const PIN = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor"/><circle cx="12" cy="9" r="2.5" fill="#FBFAF6"/></svg>';
+
+function amapURL(item, cityCn){
+  if(item.link) return item.link; // verified direct Amap short-link
+  const kw = encodeURIComponent(item.q || item.cn);
+  const city = encodeURIComponent(cityCn);
+  return `https://uri.amap.com/search?keyword=${kw}&city=${city}&src=delineconcept&callnative=1`;
+}
+
+const GROUP_LABELS = {hotel:"Отели", halal:"Еда", shop:"Шоппинг", fun:"Развлечения", spa:"Баня", tcm:"Клиники", sights:"Достопримечательности"};
+const GROUP_ORDER = ["hotel","halal","shop","fun","spa","tcm","sights"];
+
+// short labels + icons for the bottom category bar
+const CAT_MENU = [
+  {key:"all",    label:"Всё",     icon:"◍"},
+  {key:"hotel",  label:"Отели",   icon:"🏨"},
+  {key:"halal",  label:"Еда",     icon:"🍽"},
+  {key:"spa",    label:"Баня",    icon:"♨"},
+  {key:"tcm",    label:"Клиники", icon:"⚕"},
+  {key:"places", label:"Места",   icon:"📍"},
+];
+// super-category: one button that shows several sub-sections (with their own headers)
+const SUPER = {places:["shop","fun","sights"]};
+
+// does the given city contain any items for a menu key?
+function cityHasCat(city, key){
+  if(key==="all") return true;
+  const cats = SUPER[key] || [key];
+  return city.items.some(i=>cats.includes(i.cat));
+}
+
+let activeCity = CITIES[0].id;
+let activeCat  = "all";
+
+function buildCityTabs(){
+  const nav = document.getElementById("citytabs");
+  nav.innerHTML = "";
+  CITIES.forEach(city=>{
+    const b = document.createElement("button");
+    b.className = "ctab" + (city.id===activeCity ? " active":"");
+    b.dataset.city = city.id;
+    b.innerHTML = `${city.en} <span class="cn">${city.cn}</span>`;
+    b.addEventListener("click", ()=>{
+      activeCity = city.id;
+      // if current filter has nothing in the new city, reset to "Всё"
+      const nc = CITIES.find(c=>c.id===activeCity);
+      if(!cityHasCat(nc, activeCat)) activeCat = "all";
+      buildCityTabs();
+      buildCatBar();
+      render();
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+    nav.appendChild(b);
+  });
+}
+
+function buildCatBar(){
+  const bar = document.getElementById("catbar");
+  bar.innerHTML = "";
+  const city = CITIES.find(c=>c.id===activeCity) || CITIES[0];
+  CAT_MENU.filter(c=>cityHasCat(city, c.key)).forEach(c=>{
+    const b = document.createElement("button");
+    b.className = "catchip" + (c.key===activeCat ? " on":"");
+    b.dataset.cat = c.key;
+    b.innerHTML = `<span class="ci">${c.icon}</span><span class="lbl-full">${c.label}</span>`;
+    b.addEventListener("click", ()=>{
+      activeCat = c.key;
+      buildCatBar();
+      render();
+    });
+    bar.appendChild(b);
+  });
+}
+
+function render(){
+  const root = document.getElementById("content");
+  root.innerHTML = "";
+  const city = CITIES.find(c=>c.id===activeCity) || CITIES[0];
+
+  const sec = document.createElement("section");
+  sec.className = "city";
+  sec.id = city.id;
+  sec.innerHTML = `
+    <div class="city-head">
+      <span class="city-idx">${city.idx}</span>
+      <span class="city-name">${city.en}</span>
+      <span class="city-cn">${city.cn}</span>
+    </div>`;
+
+  let shown = 0;
+  const allowed = activeCat==="all" ? GROUP_ORDER : (SUPER[activeCat] || [activeCat]);
+  GROUP_ORDER.forEach(g=>{
+    if(!allowed.includes(g)) return;
+    const rows = city.items.filter(i=>i.cat===g);
+    if(!rows.length) return;
+    const gl = document.createElement("div");
+    gl.className = "group-label";
+    gl.textContent = GROUP_LABELS[g];
+    sec.appendChild(gl);
+    const card = document.createElement("div");
+    card.className = "card";
+    rows.forEach(item=>{
+      shown++;
+      const row = document.createElement("div");
+      row.className = "row";
+      row.innerHTML = `
+        <div class="row-main">
+          <div class="name-line">
+            <span class="en">${item.en}</span>
+            <button class="cn-copy" data-cn="${item.cn}">${item.cn}<span class="ic">⧉ копировать</span></button>
+          </div>
+          <div class="meta"><span class="area">${item.area}</span></div>
+          <div class="note">${item.note}</div>
+        </div>
+        <a class="amap" href="${amapURL(item, city.cn)}" target="_blank" rel="noopener" aria-label="Открыть ${item.en} в Amap">
+          ${PIN}<span>Amap</span>
+        </a>`;
+      card.appendChild(row);
+    });
+    sec.appendChild(card);
+  });
+
+  if(shown===0){
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.style.display = "block";
+    empty.textContent = "В этой категории пока ничего нет.";
+    sec.appendChild(empty);
+  }
+
+  root.appendChild(sec);
+  bindCopy();
+}
+
+/* ---- Copy Chinese name ---- */
+function bindCopy(){
+  document.querySelectorAll(".cn-copy").forEach(btn=>{
+    btn.addEventListener("click", async ()=>{
+      const text = btn.dataset.cn;
+      try{ await navigator.clipboard.writeText(text); }
+      catch(e){
+        const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);
+        ta.select();try{document.execCommand("copy");}catch(_){} document.body.removeChild(ta);
+      }
+      btn.classList.add("done");
+      const ic=btn.querySelector(".ic"); const prev=ic.textContent; ic.textContent="✓ скопировано";
+      showToast(text);
+      setTimeout(()=>{btn.classList.remove("done");ic.textContent=prev;},1400);
+    });
+  });
+}
+
+let toastT;
+function showToast(cn){
+  const t=document.getElementById("toast");
+  t.innerHTML = `Скопировано <span class="cnv">${cn}</span>`;
+  t.classList.add("show");
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>t.classList.remove("show"),1600);
+}
+
+buildCityTabs();
+buildCatBar();
+render();
+</script>
+</body>
+</html>
