@@ -397,12 +397,11 @@ const CAT_MENU = [
   {key:"all",    label:"Всё",     icon:"◍"},
   {key:"hotel",  label:"Отели",   icon:"🏨"},
   {key:"halal",  label:"Еда",     icon:"🍽"},
-  {key:"spa",    label:"Баня",    icon:"♨"},
   {key:"tcm",    label:"Клиники", icon:"⚕"},
   {key:"places", label:"Места",   icon:"📍"},
 ];
 // super-category: one button that shows several sub-sections (with their own headers)
-const SUPER = {places:["shop","fun","sights"]};
+const SUPER = {places:["shop","fun","spa","sights"]};
 
 // does the given city contain any items for a menu key?
 function cityHasCat(city, key){
