@@ -98,6 +98,12 @@
   .cn-copy:hover{background:var(--jade-soft)}
   .cn-copy .ic{opacity:.55;font-size:11px;white-space:nowrap}
   .cn-copy.done{color:var(--seal);background:var(--seal-soft)}
+  .halal-badge{
+    font-family:var(--disp);font-size:9.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+    border-radius:20px;padding:2px 8px;display:inline-flex;align-items:center;white-space:nowrap;
+    color:var(--jade);background:var(--jade-soft);
+  }
+  .halal-badge.no{color:var(--ink-faint);background:var(--line)}
   .meta{margin-top:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .area{
     font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;
@@ -224,41 +230,41 @@ const CITIES = [
   {
     id:"guangzhou", en:"Гуанчжоу", cn:"广州", idx:"01",
     items:[
-      {cat:"halal", en:"Sultan Turkish Restaurant", cn:"苏坦土耳其餐厅", link:"https://surl.amap.com/cyAxtToc6Sm", area:"Юэсю · Турецкая кухня · ¥154/чел · 10:00–24:00",
+      {cat:"food", halal:true, en:"Sultan Turkish Restaurant", cn:"苏坦土耳其餐厅", link:"https://surl.amap.com/cyAxtToc6Sm", area:"Юэсю · Турецкая кухня · ¥154/чел · 10:00–24:00",
         note:"Турецкий ресторан: мясо на гриле, кебабы и закуски-мезе. Готовят вкусно, порции большие, обслуживают быстро. Одно из лучших мест такого типа в районе."},
-      {cat:"halal", en:"OTANTIK (Tianhe Tiyu West)", cn:"欧坦餐厅(GZ Tianhe广州天河体育西店)", link:"https://surl.amap.com/2QUGDzg32Ia", area:"Тяньхэ · Ближневосточная кухня · ¥118/чел · 11:00–23:30",
+      {cat:"food", halal:true, en:"OTANTIK (Tianhe Tiyu West)", cn:"欧坦餐厅(GZ Tianhe广州天河体育西店)", link:"https://surl.amap.com/2QUGDzg32Ia", area:"Тяньхэ · Ближневосточная кухня · ¥118/чел · 11:00–23:30",
         note:"Ближневосточная кухня в приятном зале. Большие порции, вкусно и не слишком дорого — удобно спокойно поужинать с клиентом. Есть своя парковка."},
-      {cat:"halal", en:"OTANTIK (Liwan Branch)", cn:"欧坦餐厅(GZ Liwan广州荔湾店)", link:"https://surl.amap.com/btXg2HMnf9y", area:"Ливань · Поздний ужин · ¥154/чел · 11:30–23:30",
+      {cat:"food", halal:true, en:"OTANTIK (Liwan Branch)", cn:"欧坦餐厅(GZ Liwan广州荔湾店)", link:"https://surl.amap.com/btXg2HMnf9y", area:"Ливань · Поздний ужин · ¥154/чел · 11:30–23:30",
         note:"Тот же OTANTIK, но зал очень красивый: тёплый свет, розы на стенах, оливковые деревья — все фотографируются. Работают до поздней ночи, приятно посидеть вечером."},
-      {cat:"halal", en:"Hui Min Restaurant (Zhongshan 6th Rd)", cn:"回民饭店(中山六路)", link:"https://surl.amap.com/xKLaqK1m9Mt", area:"Юэсю · Халяльная кантонская кухня · ¥64/чел · 07:00–21:00",
+      {cat:"food", halal:true, en:"Hui Min Restaurant (Zhongshan 6th Rd)", cn:"回民饭店(中山六路)", link:"https://surl.amap.com/xKLaqK1m9Mt", area:"Юэсю · Халяльная кантонская кухня · ¥64/чел · 07:00–21:00",
         note:"Старый халяльный кантонский ресторан, работает больше 20 лет. Берут утренний дянь-синь (маленькие блюда к чаю) и знаменитую утку. Открываются рано утром."},
-      {cat:"halal", en:"Xinyue Xinjiang Cuisine (Kaisa Plaza)", cn:"新粤新疆菜(佳兆业广场店)", link:"https://surl.amap.com/gDRZ9L8G22l", area:"Тяньхэ · Синьцзянская кухня · ¥85/чел · 11:00–21:30",
+      {cat:"food", halal:true, en:"Xinyue Xinjiang Cuisine (Kaisa Plaza)", cn:"新粤新疆菜(佳兆业广场店)", link:"https://surl.amap.com/gDRZ9L8G22l", area:"Тяньхэ · Синьцзянская кухня · ¥85/чел · 11:00–21:30",
         note:"Синьцзянская кухня, которую хвалят местные. Главное — баранина, которую едят руками, и «большая тарелка курицы» с широкой лапшой в соусе. Сытно и вкусно."},
-      {cat:"halal", en:"Bosphorus (Zhaoqing Mansion Branch)", cn:"铂斯西餐厅(肇庆大厦店)", link:"https://surl.amap.com/gTRqdXU1zdvT", area:"Сяобэй · Турецкая кухня · ¥143/чел · 10:00–01:00",
+      {cat:"food", halal:true, en:"Bosphorus (Zhaoqing Mansion Branch)", cn:"铂斯西餐厅(肇庆大厦店)", link:"https://surl.amap.com/gTRqdXU1zdvT", area:"Сяобэй · Турецкая кухня · ¥143/чел · 10:00–01:00",
         note:"Турецкий ресторан у метро Сяобэй. Фишка — большой стейк на кости с перечным соусом: корочка хрустит, мясо мягкое. Порции большие, цена нормальная."},
-      {cat:"halal", en:"Bosphorus Garden Turkish Cafe & Restaurant", cn:"铂斯土耳其西餐厅", link:"https://surl.amap.com/gTKFtquMgwj", area:"Таоцзинь · Турецкая/западная кухня · ¥111/чел · 12:00–03:00",
+      {cat:"food", halal:true, en:"Bosphorus Garden Turkish Cafe & Restaurant", cn:"铂斯土耳其西餐厅", link:"https://surl.amap.com/gTKFtquMgwj", area:"Таоцзинь · Турецкая/западная кухня · ¥111/чел · 12:00–03:00",
         note:"Турецкое кафе-ресторан. Вкусные лепёшки, средиземноморские сэндвичи и яичница с помидорами и сыром. Работают до трёх ночи, есть парковка."},
-      {cat:"halal", en:"Bosphorus Turkish Restaurant (Zhujiang Branch)", cn:"铂斯土耳其西餐厅", link:"https://surl.amap.com/ibOB4fk1jbTY", area:"Тяньхэ · Турецкая/западная кухня · ¥145/чел · 11:30–23:30",
+      {cat:"food", halal:true, en:"Bosphorus Turkish Restaurant (Zhujiang Branch)", cn:"铂斯土耳其西餐厅", link:"https://surl.amap.com/ibOB4fk1jbTY", area:"Тяньхэ · Турецкая/западная кухня · ¥145/чел · 11:30–23:30",
         note:"Турецкий ресторан у Жемчужной реки. Советуют бараньи рёбра на гриле — сочные, с корочкой. Хорошо зайти после вечерней прогулки по набережной."},
-      {cat:"halal", en:"Antalya Garden Restaurant (Liede)", cn:"安塔利亚花园餐厅(猎德店)", link:"https://surl.amap.com/aRM4ZP4HgwW", area:"Тяньхэ · Турецкая кухня · ¥131/чел · 10:00–01:30",
+      {cat:"food", halal:true, en:"Antalya Garden Restaurant (Liede)", cn:"安塔利亚花园餐厅(猎德店)", link:"https://surl.amap.com/aRM4ZP4HgwW", area:"Тяньхэ · Турецкая кухня · ¥131/чел · 10:00–01:30",
         note:"Турецкий ресторан с космической темой: официанты в костюмах инопланетян танцуют, бывает фейерверк. Весело и необычно, отлично для пары. Работают почти до двух ночи."},
-      {cat:"halal", en:"Antalya Turkish Restaurant (Xiaobei)", cn:"安塔利亚土耳其餐厅(小北店)", link:"https://surl.amap.com/eMcIJIGg1LG", area:"Сяобэй · Турецкая кухня · ¥137/чел · 12:00–03:00",
+      {cat:"food", halal:true, en:"Antalya Turkish Restaurant (Xiaobei)", cn:"安塔利亚土耳其餐厅(小北店)", link:"https://surl.amap.com/eMcIJIGg1LG", area:"Сяобэй · Турецкая кухня · ¥137/чел · 12:00–03:00",
         note:"Настоящая турецкая кухня в мусульманском квартале. Хвалят наваристый суп и мясо — снаружи хрустит, внутри мягкое. Часто заходят местные. Открыто до трёх ночи."},
-      {cat:"halal", en:"CZN Burak Turkish Restaurant", cn:"CZN Burak柏克土耳其西餐厅", link:"https://surl.amap.com/j0uqscK1q02a", area:"Юэсю · Турецкая кухня, шоу-формат · ¥154/чел · 12:00–24:00",
+      {cat:"food", halal:true, en:"CZN Burak Turkish Restaurant", cn:"CZN Burak柏克土耳其西餐厅", link:"https://surl.amap.com/j0uqscK1q02a", area:"Юэсю · Турецкая кухня, шоу-формат · ¥154/чел · 12:00–24:00",
         note:"Турецкий ресторан известного шеф-повара из соцсетей. Готовят прямо при гостях, с небольшим шоу. В меню мясо и кебабы."},
-      {cat:"halal", en:"Armada Restaurant", cn:"阿美达中东料理(环市东)", link:"https://surl.amap.com/j18WXrgydC6", area:"Юэсю · Ближневосточная кухня (в отеле) · ¥111/чел · 10:30–24:00",
+      {cat:"food", halal:true, en:"Armada Restaurant", cn:"阿美达中东料理(环市东)", link:"https://surl.amap.com/j18WXrgydC6", area:"Юэсю · Ближневосточная кухня (в отеле) · ¥111/чел · 10:30–24:00",
         note:"Ближневосточный ресторан над отелем. Советуют жареную курицу и воздушную лепёшку с ореховым соусом, ещё есть хумус и кебабы. Хорошо посидеть компанией."},
-      {cat:"halal", en:"Чайхона No. 1", cn:"Чайхона茶哈哪餐厅", link:"https://surl.amap.com/1TnPBRcKcU5", area:"Ливань · Среднеазиатская кухня · ¥86/чел · 08:00–00:30",
+      {cat:"food", halal:true, en:"Чайхона No. 1", cn:"Чайхона茶哈哪餐厅", link:"https://surl.amap.com/1TnPBRcKcU5", area:"Ливань · Среднеазиатская кухня · ¥86/чел · 08:00–00:30",
         note:"Чайхана со знакомой едой: плов, запечёный сыр с яйцом (хачапури), баранья ножка, шашлык. Гостям из Казахстана и России будет как дома, есть даже русский фруктовый чай."},
-      {cat:"halal", en:"MADO Ice Cream & Café", cn:"MADO冰淇淋咖啡馆(淘金店)", link:"https://surl.amap.com/3fmUx9orfdU", area:"Таоцзинь · Турецкое кафе · ¥77/чел · 08:00–01:00",
+      {cat:"food", halal:true, en:"MADO Ice Cream & Café", cn:"MADO冰淇淋咖啡馆(淘金店)", link:"https://surl.amap.com/3fmUx9orfdU", area:"Таоцзинь · Турецкое кафе · ¥77/чел · 08:00–01:00",
         note:"Турецкое кафе: знаменитое тягучее турецкое мороженое и слоёное мороженое, десерты и кофе. Хорошее место зайти на сладкое."},
-      {cat:"halal", en:"Nakhlah Cafe", cn:"Nakhlah cafe 沙特咖啡", link:"https://surl.amap.com/XirLdY1z88f", area:"Тяньхэ · Саудовский кофе · ¥58/чел · 14:00–02:00",
+      {cat:"food", halal:true, en:"Nakhlah Cafe", cn:"Nakhlah cafe 沙特咖啡", link:"https://surl.amap.com/XirLdY1z88f", area:"Тяньхэ · Саудовский кофе · ¥58/чел · 14:00–02:00",
         note:"Саудовская кофейня рядом с деловым центром. Удобно спокойно посидеть и поговорить за кофе."},
-      {cat:"halal", en:"Dicos (Nanfenghui Branch)", cn:"德克士(南丰汇店)", link:"https://surl.amap.com/dz3TOqS17eMg", area:"Паджоу · Халяльный фастфуд · ¥20/чел · 10:00–02:00",
+      {cat:"food", halal:true, en:"Dicos (Nanfenghui Branch)", cn:"德克士(南丰汇店)", link:"https://surl.amap.com/dz3TOqS17eMg", area:"Паджоу · Халяльный фастфуд · ¥20/чел · 10:00–02:00",
         note:"Халяльный фастфуд: курица и бургеры. Быстро перекусить в торговом центре."},
-      {cat:"halal", en:"Burger Plus+", cn:"BURGER PLUS+", link:"https://surl.amap.com/1zbAnO61aGU", area:"Ливань · Халяльные бургеры · ¥77/чел · 12:00–24:00",
+      {cat:"food", halal:true, en:"Burger Plus+", cn:"BURGER PLUS+", link:"https://surl.amap.com/1zbAnO61aGU", area:"Ливань · Халяльные бургеры · ¥77/чел · 12:00–24:00",
         note:"Халяльные бургеры. Простое место, чтобы быстро и сытно поесть."},
-      {cat:"halal", en:"Cedar Bakery", cn:"Cedar Bakery", link:"https://surl.amap.com/bTl3ew21fas9", area:"Ливань · Халяльная европейская пекарня · ¥28/чел · 09:00–24:00",
+      {cat:"food", halal:true, en:"Cedar Bakery", cn:"Cedar Bakery", link:"https://surl.amap.com/bTl3ew21fas9", area:"Ливань · Халяльная европейская пекарня · ¥28/чел · 09:00–24:00",
         note:"Пекарня со свежей выпечкой и сладким. Хорошо взять кофе с булочкой."},
       {cat:"spa", en:"Yuan Ecological Grand Hotel (Haizhu)", cn:"广东南美元生态大酒店(海珠店)", link:"https://surl.amap.com/i1SW3CqwaTT", area:"Хайчжу · Баня · Премиум",
         note:"Баня и сауна премиум-класса."},
@@ -307,15 +313,15 @@ const CITIES = [
         note:"Международный Hilton в Шунде с очень высокими оценками и хорошим соотношением цены и качества. Надёжный выбор для клиента."},
       {cat:"hotel", en:"Pullman Foshan Shunde", cn:"佛山顺德雅高铂尔曼酒店", link:"https://surl.amap.com/iJ7ZO8ikeYw", area:"Шунде · 5★ · бассейн, теннис",
         note:"Отель Pullman (Accor) в Шунде: номера с балконами и видом на город, бассейн, фитнес, теннисный корт. Бесплатная парковка."},
-      {cat:"halal", en:"Sawa Middle Eastern & Fusion", cn:"Sawa中东融合菜餐厅", link:"https://surl.amap.com/cfYtfzA1m7fY", area:"Чанчэн · Фьюжн · ¥106/чел · 11:30–21:30",
+      {cat:"food", halal:true, en:"Sawa Middle Eastern & Fusion", cn:"Sawa中东融合菜餐厅", link:"https://surl.amap.com/cfYtfzA1m7fY", area:"Чанчэн · Фьюжн · ¥106/чел · 11:30–21:30",
         note:"Ближневосточная кухня рядом с рынком плитки и сантехники. Фирменное — арабская курица на углях целиком: заворачивают в лепёшку с соусом. Удобно зайти пообедать после закупок, есть парковка."},
-      {cat:"halal", en:"Al Mandi Restaurant", cn:"清真西北人家餐厅(AL MANDI Restaurant)", link:"https://surl.amap.com/c9f3N2q1k2Pf", area:"Шунде, Лэцун · Халяльная северо-западная кухня · ¥64/чел · 10:30–22:30",
+      {cat:"food", halal:true, en:"Al Mandi Restaurant", cn:"清真西北人家餐厅(AL MANDI Restaurant)", link:"https://surl.amap.com/c9f3N2q1k2Pf", area:"Шунде, Лэцун · Халяльная северо-западная кухня · ¥64/чел · 10:30–22:30",
         note:"Халяльная северо-западная кухня в мебельном центре. Баранина, которую едят руками, большая тарелка курицы, свежие овощи. Порции большие."},
-      {cat:"halal", en:"Adilijiang Xinjiang Cuisine", cn:"阿迪力江新疆美食", link:"https://surl.amap.com/c9yeujg1q7RT", area:"Шунде · Синьцзянская кухня · ¥59/чел · 12:00–24:00",
+      {cat:"food", halal:true, en:"Adilijiang Xinjiang Cuisine", cn:"阿迪力江新疆美食", link:"https://surl.amap.com/c9yeujg1q7RT", area:"Шунде · Синьцзянская кухня · ¥59/чел · 12:00–24:00",
         note:"Уйгурская кухня: шашлык, лапша и плов."},
-      {cat:"halal", en:"Shaharah Arabic Restaurant", cn:"ShaharahArabicRestaurant莎哈啦阿拉伯餐厅", link:"https://surl.amap.com/ceYri2C529c", area:"Шунде, Лэцун · Арабская кухня · ¥65/чел · 08:00–23:00",
+      {cat:"food", halal:true, en:"Shaharah Arabic Restaurant", cn:"ShaharahArabicRestaurant莎哈啦阿拉伯餐厅", link:"https://surl.amap.com/ceYri2C529c", area:"Шунде, Лэцун · Арабская кухня · ¥65/чел · 08:00–23:00",
         note:"Арабский (йеменский) ресторан в Лэцуне, красивое здание. Мясное ассорти-гриль, йеменские лепёшки, креветки в чесноке (салуна)."},
-      {cat:"halal", en:"Turkish Restaurant (Dongyi Meiju)", cn:"土耳其餐厅(东怡美居店)", link:"https://surl.amap.com/1CF5itkA617", area:"Шунде, Лэцун · Турецкая кухня · ¥92/чел · 11:00–23:00",
+      {cat:"food", halal:true, en:"Turkish Restaurant (Dongyi Meiju)", cn:"土耳其餐厅(东怡美居店)", link:"https://surl.amap.com/1CF5itkA617", area:"Шунде, Лэцун · Турецкая кухня · ¥92/чел · 11:00–23:00",
         note:"Турецкая кухня в Лэцуне. Плов с бараниной, мясные роллы, йеменский омлет-лепёшка, салат с помидорами."},
       {cat:"shop", en:"Florentia Village (Guangzhou/Foshan)", cn:"佛罗伦萨小镇(广佛名品奥特莱斯)", link:"https://surl.amap.com/5mndhIyneNW", area:"Наньхай/граница с Гуанчжоу · Люкс-аутлет",
         note:"Первый в Китае аутлет в итальянском стиле — 200+ люксовых брендов (Prada, Gucci, Burberry, Balenciaga, Fendi, Jimmy Choo и др.) со скидками от 2 折 (80%). Красивая архитектура, кафе и рестораны. Стоит закладывать полдня."},
@@ -328,23 +334,23 @@ const CITIES = [
   {
     id:"zhongshan", en:"Чжуншань", cn:"中山", idx:"03",
     items:[
-      {cat:"halal", en:"Xinyue Xinjiang Cuisine (Zhongshan Old Store)", cn:"新粤新疆菜餐厅(中山老店)", link:"https://surl.amap.com/e2bwO4K148KT", area:"Шицзи · Халяльная синьцзянская кухня · ¥97/чел · 11:00–14:00, 17:00–21:30",
+      {cat:"food", halal:true, en:"Xinyue Xinjiang Cuisine (Zhongshan Old Store)", cn:"新粤新疆菜餐厅(中山老店)", link:"https://surl.amap.com/e2bwO4K148KT", area:"Шицзи · Халяльная синьцзянская кухня · ¥97/чел · 11:00–14:00, 17:00–21:30",
         note:"Известная синьцзянская кухня, работает давно. Шашлык из баранины, большая тарелка курицы, жареные бараньи рёбра, плов, лапша-лянпи."},
-      {cat:"halal", en:"Tianshan Muyang Xinjiang Restaurant", cn:"天山牧羊新疆主题餐厅(悦盈新城城熙店)", link:"https://surl.amap.com/crydgC6y4HW", area:"Халяльная синьцзянская кухня · ¥88/чел · 10:00–22:00",
+      {cat:"food", halal:true, en:"Tianshan Muyang Xinjiang Restaurant", cn:"天山牧羊新疆主题餐厅(悦盈新城城熙店)", link:"https://surl.amap.com/crydgC6y4HW", area:"Халяльная синьцзянская кухня · ¥88/чел · 10:00–22:00",
         note:"Синьцзянский ресторан с тематическим залом. Фирменное — золотистые жареные бараньи рёбра, баранина с луком, плов, шашлык."},
-      {cat:"halal", en:"Xiyu Shifu", cn:"清真·西域食府", link:"https://surl.amap.com/csaC1h019fwr", area:"Халяль · ¥44/чел · 12:00–03:30",
+      {cat:"food", halal:true, en:"Xiyu Shifu", cn:"清真·西域食府", link:"https://surl.amap.com/csaC1h019fwr", area:"Халяль · ¥44/чел · 12:00–03:30",
         note:"Северо-западная халяльная кухня — большая тарелка курицы, шашлык, острый картофель. Работают до половины четвёртого ночи."},
-      {cat:"halal", en:"KebabsnCurry (Guzhen)", cn:"KebabsnCurry印度料理(古镇店)", link:"https://surl.amap.com/cBW2Wyu1w6R6", area:"Гучжэнь · Индийская кухня · ¥58/чел · 11:00–23:00",
+      {cat:"food", halal:true, en:"KebabsnCurry (Guzhen)", cn:"KebabsnCurry印度料理(古镇店)", link:"https://surl.amap.com/cBW2Wyu1w6R6", area:"Гучжэнь · Индийская кухня · ¥58/чел · 11:00–23:00",
         note:"Индийская кухня в Гучжэне: тандури-курица, курица карри, слоёные лепёшки, ягнёнок по-индийски. Удобно в день закупок света."},
-      {cat:"halal", en:"Antalya Turkish Western Restaurant", cn:"安塔利亚土耳其西餐厅", link:"https://surl.amap.com/cEWgNqy6g2s", area:"Гучжэнь · Турецкая/западная кухня · ¥88/чел · 09:00–23:00",
+      {cat:"food", halal:true, en:"Antalya Turkish Western Restaurant", cn:"安塔利亚土耳其西餐厅", link:"https://surl.amap.com/cEWgNqy6g2s", area:"Гучжэнь · Турецкая/западная кухня · ¥88/чел · 09:00–23:00",
         note:"Турецкий ресторан в Гучжэне (столица освещения). Стейк-томагавк, шашлык, турецкий кофе с гаданием на кофейной гуще. Красивый интерьер для фото, удобно в день закупок света."},
-      {cat:"halal", en:"Damoqing Shifu", cn:"大漠情食府", link:"https://surl.amap.com/cFDkE7MT0VR", area:"Гучжэнь · Особые блюда · ¥81/чел · 10:30–22:30",
+      {cat:"food", halal:true, en:"Damoqing Shifu", cn:"大漠情食府", link:"https://surl.amap.com/cFDkE7MT0VR", area:"Гучжэнь · Особые блюда · ¥81/чел · 10:30–22:30",
         note:"Северо-западная халяльная кухня в Гучжэне. Баранина руками, большая тарелка курицы, жареный барашек целиком, рыба-гриль."},
-      {cat:"halal", en:"Xinyue Xinjiang Cuisine (Guzhen Lihe)", cn:"新粤新疆菜(古镇利和店)", link:"https://surl.amap.com/bMx0HkK1Bdcg", area:"Гучжэнь · Халяльная синьцзянская кухня · ¥105/чел · 11:00–21:30",
+      {cat:"food", halal:true, en:"Xinyue Xinjiang Cuisine (Guzhen Lihe)", cn:"新粤新疆菜(古镇利和店)", link:"https://surl.amap.com/bMx0HkK1Bdcg", area:"Гучжэнь · Халяльная синьцзянская кухня · ¥105/чел · 11:00–21:30",
         note:"Синьцзянская кухня в ТЦ Лихэ, Гучжэнь. Лапша-лянпи, плов, шашлык из баранины, домашний йогурт."},
-      {cat:"halal", en:"Istanbul Turkish Restaurant", cn:"伊斯坦布尔istanbul土耳其餐厅", link:"https://surl.amap.com/cGNYWvU1B9tf", area:"Гучжэнь · Халяльная турецкая кухня · ¥108/чел · 10:00–24:00",
+      {cat:"food", halal:true, en:"Istanbul Turkish Restaurant", cn:"伊斯坦布尔istanbul土耳其餐厅", link:"https://surl.amap.com/cGNYWvU1B9tf", area:"Гучжэнь · Халяльная турецкая кухня · ¥108/чел · 10:00–24:00",
         note:"Турецкий ресторан в Гучжэне с красивым залом. Пиде (турецкая пицца-лодочка), микс-гриль, пахлава и турецкий кофе."},
-      {cat:"halal", en:"Katalya Restaurant", cn:"卡塔利亚餐厅", link:"https://surl.amap.com/cIFYici1v2AA", area:"Гучжэнь · Халяль · ~¥60/чел · 09:00–23:00",
+      {cat:"food", halal:true, en:"Katalya Restaurant", cn:"卡塔利亚餐厅", link:"https://surl.amap.com/cIFYici1v2AA", area:"Гучжэнь · Халяль · ~¥60/чел · 09:00–23:00",
         note:"Халяльный ресторан (Cattleya) в Гучжэне — мясные блюда и лепёшки."},
       {cat:"shop", en:"W·T Lighting Expo Center", cn:"万腾灯博", link:"https://surl.amap.com/iNhZPvY1p1hm", area:"Гучжэнь, Тунсин Лу · Закупки освещения",
         note:"Крупный выставочный центр освещения в Гучжэне — шоурумы фабрик фасадного и интерьерного света под одной крышей."},
@@ -355,7 +361,7 @@ const CITIES = [
   {
     id:"shenzhen", en:"Шэньчжэнь", cn:"深圳", idx:"04",
     items:[
-      {cat:"halal", en:"1001 Xinjiang Cuisine (Coastal City)", cn:"1001西域·清真餐厅(欢乐海岸店)", link:"https://surl.amap.com/7eIqpj0128c4", area:"Наньшань, Шахэ · Синьцзянская кухня · ¥97/чел",
+      {cat:"food", halal:true, en:"1001 Xinjiang Cuisine (Coastal City)", cn:"1001西域·清真餐厅(欢乐海岸店)", link:"https://surl.amap.com/7eIqpj0128c4", area:"Наньшань, Шахэ · Синьцзянская кухня · ¥97/чел",
         note:"Филиал известной сети синьцзянской кухни в комплексе Coastal City (欢乐海岸) — удобно совместить с шоппингом. Большая тарелка курицы, шашлык, плов."},
       {cat:"shop", en:"Huaqiangbei Electronics Market", cn:"华强北", link:"https://surl.amap.com/4xC4Y8i16Db", area:"Футянь · Рынок электроники · «улица № 1» Китая",
         note:"Легендарный электронный квартал — 20+ огромных рынков (Sege, Huaqiang Electronics World и др.): телефоны, аксессуары, компоненты, дроны. Торгуйтесь смело. Осторожно: часть «новых» телефонов на деле восстановленные (翻新机) — проверяйте товар и продавца перед покупкой."},
@@ -372,9 +378,9 @@ const CITIES = [
   {
     id:"dongguan", en:"Дунгуань", cn:"东莞", idx:"05",
     items:[
-      {cat:"halal", en:"Afanti Grandpa Restaurant", cn:"阿凡提老爷爷餐厅", q:"阿凡提老爷爷餐厅 东城", area:"Дунчэн · Халяльная уйгурская кухня · 11:30–21:00",
+      {cat:"food", halal:true, en:"Afanti Grandpa Restaurant", cn:"阿凡提老爷爷餐厅", q:"阿凡提老爷爷餐厅 东城", area:"Дунчэн · Халяльная уйгурская кухня · 11:30–21:00",
         note:"Уйгурская халяльная кухня в ТЦ Ифэн в районе Дунчэн — шашлык, баранина, плов, лапша."},
-      {cat:"halal", en:"Dongguan Renjia", cn:"东莞人家", q:"东莞人家 东城", area:"Дунчэн · Местная кухня Дунгуаня",
+      {cat:"food", halal:true, en:"Dongguan Renjia", cn:"东莞人家", q:"东莞人家 东城", area:"Дунчэн · Местная кухня Дунгуаня",
         note:"Старое, хорошо известное заведение с местной дунгуаньской кухней — работает допоздна, есть бесплатная парковка. Хорошо для знакомства с местной едой (не халяль)."},
     ]
   }
@@ -389,14 +395,14 @@ function amapURL(item, cityCn){
   return `https://uri.amap.com/search?keyword=${kw}&city=${city}&src=delineconcept&callnative=1`;
 }
 
-const GROUP_LABELS = {hotel:"Отели", halal:"Еда", shop:"Шоппинг", fun:"Развлечения", spa:"Баня", tcm:"Клиники", sights:"Достопримечательности"};
-const GROUP_ORDER = ["hotel","halal","shop","fun","spa","tcm","sights"];
+const GROUP_LABELS = {hotel:"Отели", food:"Еда", shop:"Шоппинг", fun:"Развлечения", spa:"Баня", tcm:"Клиники", sights:"Достопримечательности"};
+const GROUP_ORDER = ["hotel","food","shop","fun","spa","tcm","sights"];
 
 // short labels + icons for the bottom category bar
 const CAT_MENU = [
   {key:"all",    label:"Всё",     icon:"◍"},
   {key:"hotel",  label:"Отели",   icon:"🏨"},
-  {key:"halal",  label:"Еда",     icon:"🍽"},
+  {key:"food",   label:"Еда",     icon:"🍽"},
   {key:"tcm",    label:"Клиники", icon:"⚕"},
   {key:"places", label:"Места",   icon:"📍"},
 ];
@@ -490,7 +496,7 @@ function render(){
             <span class="en">${item.en}</span>
             <button class="cn-copy" data-cn="${item.cn}">${item.cn}<span class="ic">⧉<span class="ic-label"> копировать</span></span></button>
           </div>
-          <div class="meta"><span class="area">${item.area}</span></div>
+          <div class="meta"><span class="area">${item.area}</span>${item.cat==='food' ? `<span class="halal-badge${item.halal ? '' : ' no'}">${item.halal ? 'Халяль' : 'Не халяль'}</span>` : ''}</div>
           <div class="note">${item.note}</div>
         </div>
         <a class="amap" href="${amapURL(item, city.cn)}" target="_blank" rel="noopener" aria-label="Открыть ${item.en} в Amap">
